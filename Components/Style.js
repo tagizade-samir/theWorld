@@ -5,6 +5,44 @@ import {Dimensions} from 'react-native'
 const windowWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
 
+export const ProfileStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        paddingTop: 40
+    },
+    img: {
+        width: 100,
+        height: 100,
+        resizeMode: 'cover',
+        marginRight: 20
+    },
+})
+
+export const PostsStyles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'row',
+        padding: 10,
+        marginBottom: 10
+    },
+    headLeft: {
+        flex: 1,
+        alignItems: 'center'
+    },
+    headRight: {
+        flex: 3,
+        paddingLeft: 20,
+        justifyContent: 'space-between'
+    },
+    img: {
+        width: 100,
+        height: 100,
+        resizeMode: 'cover',
+    }
+})
+
 export const Signinstyles = StyleSheet.create({
     signInContainer: {
         flex: 1,
