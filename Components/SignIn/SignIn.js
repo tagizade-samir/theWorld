@@ -2,8 +2,10 @@ import React from 'react'
 import { View, Text, SafeAreaView, Image, StatusBar } from 'react-native'
 import { Signinstyles } from '../Style'
 import { TextInput, TouchableOpacity } from 'react-native'
+import {connect} from 'react-redux'
+import {userLogin} from '../../Redux/userActions'
 
-export const SignIn = (props) => {
+const SignIn = (props) => {
     const {
         signInContainer,
         signInForm,
@@ -14,6 +16,14 @@ export const SignIn = (props) => {
         img,
         signInBtn
     } = Signinstyles
+
+    let usernameInput = '', passInput = ''
+
+    const loginCheck = () => {
+        if (usernameInput == props.username && passInput == props.password) {
+            props.userLogin(true)
+        }
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -30,22 +40,21 @@ export const SignIn = (props) => {
                 <View style={signInForm} >
                     <View style={Signinstyles.formInput}>
                         <TextInput
-                            style={[Signinstyles.input, {color: props.colorText}]} placeholder={'Username or email'}
-                            value={props.usernameInput}
-                            onChangeText={props.onUsernameChange}
+                            style={[Signinstyles.input]}
+                            placeholder={'Username or email'}
+                            onChangeText={(text) => usernameInput = text}
                         />
                         <TextInput
                             autoCompleteType={'password'}
-                            style={[Signinstyles.inputPass, {color: props.colorPass}]}
+                            style={[Signinstyles.inputPass]}
                             placeholder={'Password'}
                             textContentType={'newPassword'}
                             secureTextEntry={true}
-                            value={props.passwordInput}
-                            onChangeText={props.onPasswordChange}
+                            onChangeText={(text) => passInput = text}
                         />
                     </View>
                     <View style={fromBtn}>
-                        <TouchableOpacity style={signInBtn} onPress={props.signIn}>
+                        <TouchableOpacity style={signInBtn} onPress={loginCheck} >
                             <Text style={{ textTransform: 'uppercase' }} >Sign In</Text>
                         </TouchableOpacity>
                     </View>
@@ -54,3 +63,20 @@ export const SignIn = (props) => {
         </SafeAreaView>
     )
 }
+
+const mapStateToProps =function (state)  {
+    return {
+        username: state.username,
+        password: state.password
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        userLogin: (value) => {
+            dispatch(userLogin(value))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn)
